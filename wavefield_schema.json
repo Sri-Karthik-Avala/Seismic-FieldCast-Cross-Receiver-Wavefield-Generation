@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "support_array": {
+    "dtype": "float32",
+    "shape": [
+      4,
+      3,
+      600
+    ],
+    "axes": [
+      "support_receiver",
+      "frequency_band",
+      "time_frame"
+    ],
+    "frequency_bands_hz": [
+      [
+        1.0,
+        3.0
+      ],
+      [
+        3.0,
+        6.0
+      ],
+      [
+        6.0,
+        12.0
+      ]
+    ],
+    "frame_rate_hz": 10,
+    "window_seconds": 60,
+    "window_relative_to_internal_event_reference_s": [
+      -10,
+      50
+    ]
+  },
+  "target_array": {
+    "serialization": "JSON nested numeric array",
+    "shape": [
+      3,
+      600
+    ],
+    "axes": [
+      "frequency_band",
+      "time_frame"
+    ],
+    "minimum": 0.0,
+    "maximum": 30.0,
+    "finite_only": true
+  },
+  "transform": [
+    "third-order Butterworth bandpass",
+    "analytic-signal magnitude",
+    "0.2-second uniform smoothing",
+    "10 Hz frame sampling",
+    "division by receiver-and-band continuous-background median",
+    "log1p"
+  ],
+  "geometry": {
+    "coordinate_system": "row-local anonymous metric frame",
+    "units": "kilometres",
+    "support_metadata": "support_receivers_json; objects align with support array axis 0",
+    "target_columns": [
+      "target_x_km",
+      "target_y_km",
+      "target_z_km"
+    ],
+    "privacy_transform": "independent translation, rotation/reflection, rounding, and small deterministic perturbation per row"
+  },
+  "support_order": "ascending target-to-support distance before privacy perturbation",
+  "prepare_privacy_transform": {
+    "identifiers": "private-keyed remapping and row permutation",
+    "support_signals": "band affine transform plus low-amplitude noise",
+    "target_signals": "unchanged measured target values",
+    "geometry": "private-keyed rigid transform, translation, and small coordinate perturbation"
+  },
+  "prepare_integrity_checks": {
+    "split": "165 rows / 55 groups in train; 64 rows / 32 groups in test; disjoint groups",
+    "ids": "unique, split-disjoint, and exactly aligned across test, sample, and private answers",
+    "receiver_roles": "every hidden target excluded from all same-event support fields",
+    "arrays": "complete referenced file set with strict dtype, shape, finiteness, and range checks"
+  }
+}

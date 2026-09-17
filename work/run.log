@@ -1,0 +1,5 @@
+ERROR conda.cli.main_run:execute(124): `conda run python solution.py . working/submission.csv` failed. (See above for error)
+pip_system_certs: ERROR: could not inject truststore: [ASN1: NOT_ENOUGH_DATA] not enough data (_ssl.c:4030)
+base sigma 16.0
+fold 0 val 0.2625189423561096
+
